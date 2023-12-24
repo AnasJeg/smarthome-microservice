@@ -24,7 +24,7 @@ public class RatingServiceImp implements RatingService {
 
    private final RatingRepository ratingRepository;
 
-    private final String baseUrl = "http://localhost:8090/api/";
+    private final String baseUrl = "http://localhost:8888/USERS-APPAREIL/api/";
 
 
     @Override
