@@ -1,0 +1,39 @@
+<div *ngIf="isLoading">
+  Loading...
+</div>
+
+<div *ngIf="!isLoading" class="card-container" fxLayout="row wrap" fxLayoutGap="10px">
+  <div *ngFor="let appareil of listApp" class="card-wrapper" fxFlex="calc(33.333% - 10px)">
+    <nz-card [style]="{'width': '60%', 'background-color': appareil.state ? '#52c41a' : '#f5222d'}"
+             [nzCover]="coverTemplate"
+             [nzActions]="[appareil.state ? actionOn : actionOff, actionEdit, actionEllipsis]">
+      <nz-card-meta
+        [nzTitle]="appareil?.label || label"
+        [nzDescription]="appareil?.description || description"
+      ></nz-card-meta>
+      <nz-switch [(ngModel)]="switchValues[appareil?.id || 1]" [nzControl]="true"
+                 (click)="clickSwitch(appareil?.id || 1)"
+                 [nzLoading]="loadingStates[appareil?.id || 1]"></nz-switch>
+    </nz-card>
+  </div>
+</div>
+
+<ng-template #coverTemplate>
+  <img alt="app" [src]="image" />
+</ng-template>
+
+<ng-template #actionOn>
+  <span nz-icon [nzType]="'check-circle'" [nzTheme]="'outline'" [ngStyle]="{'color': '#52c41a'}"></span>
+</ng-template>
+
+<ng-template #actionOff>
+  <span nz-icon [nzType]="'check-circle'" [nzTheme]="'outline'" [ngStyle]="{'color': '#f5222d'}"></span>
+</ng-template>
+
+<ng-template #actionEdit>
+  <span nz-icon nzType="edit"></span>
+</ng-template>
+
+<ng-template #actionEllipsis>
+  <span nz-icon nzType="ellipsis"></span>
+</ng-template>
