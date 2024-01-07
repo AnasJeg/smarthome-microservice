@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'gestion_appareil_FRONT'`, () => {
+  it(`should have as title 'smarthome_FRONT'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('gestion_appareil_FRONT');
+    expect(app.title).toEqual('smarthome_FRONT');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('gestion_appareil_FRONT app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('smarthome_FRONT app is running!');
   });
 });

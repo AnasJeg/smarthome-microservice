@@ -54,7 +54,7 @@ public class AppareilController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/switch")
+    @PutMapping("/switch")
     public ResponseEntity<?> switchApp(@RequestParam(value = "id") Long id) {
         return ResponseEntity.ok(appareilService.switchAppareil(id));
     }

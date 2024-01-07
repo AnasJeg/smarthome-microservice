@@ -64,7 +64,7 @@ public class AppareilImplementation implements AppareilService {
       }else{
           app.setState(true);
       }
-        log.info("setState Appareil {} {}",id,app.isState());
+        log.info("setState Appareil id {} and {}",id,app.isState());
         this.appareilRepository.save(app);
       return app;
     }

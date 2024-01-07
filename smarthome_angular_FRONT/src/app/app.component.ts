@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  isCollapsed = false;
   title = 'gestion_appareil_FRONT';
 }

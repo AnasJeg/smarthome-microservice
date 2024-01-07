@@ -22,7 +22,7 @@ public class RatingController {
 
     private final RatingService ratingService;
 
-    private final String baseUrl = "http://localhost:8090/api/";
+    private final String baseUrl = "http://localhost:8888/USERS-APPAREIL/api/";
 
     @GetMapping("/filter/{id}")
     public ResponseEntity<Category> rate(@PathVariable Long id) {

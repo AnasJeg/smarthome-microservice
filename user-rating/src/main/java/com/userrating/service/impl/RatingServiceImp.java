@@ -29,15 +29,14 @@ public class RatingServiceImp implements RatingService {
 
     @Override
     public Rating save(Rating rating) {
+        RestTemplate restTemplate = new RestTemplate();
         Long appId = rating.getAppareil_id();
         this.ratingRepository.save(rating);
-        log.warn("rating avg {}",ratingRepository.getAverageRatingByAppareil(appId));
+        log.info("rating avg {}",ratingRepository.getAverageRatingByAppareil(appId));
         if (ratingRepository.getAverageRatingByAppareil(appId) <= 2) {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.postForEntity(baseUrl + "appareils/switch?id=" + appId, null, Appareil.class);
+            restTemplate.put(baseUrl + "appareils/switch?id=" + appId, null, Appareil.class);
         }else {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.postForEntity(baseUrl + "appareils/switch?id=" + appId, null, Appareil.class);
+            restTemplate.put(baseUrl + "appareils/switch?id=" + appId, null, Appareil.class);
         }
 
         return rating;

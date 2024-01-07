@@ -1,0 +1,56 @@
+<div>
+  <button nz-button nzType="primary" (click)="switchAll(1)">Switch All On</button>
+  &nbsp;  &nbsp;
+  <button nz-button nzType="default" (click)="switchAll(2)">Switch All Off</button>
+</div>
+<br/>
+<div *ngIf="data$ | async as data; else loading">
+  <div nz-row [nzGutter]="16">
+    <div nz-col [nzSpan]="6" *ngFor="let appareil of getCurrentPageItems(); trackBy: trackByAppareilId">
+      <nz-card nzHoverable [style]="{'width': '100%', 'background-color': appareil.state ? '#52c41a' : '#f5222d', 'padding': '10px', 'marginBottom': '16px'}"
+               [nzCover]="coverTemplate"
+               [nzActions]="[appareil.state ? actionOn : actionOff, actionEdit, actionEllipsis]">
+        <nz-card-meta [nzTitle]="appareil?.label || label" [nzDescription]="appareil?.description || description"></nz-card-meta>
+        <nz-switch [(ngModel)]="switchValues[appareil?.id || 1]" [nzControl]="true"
+                   (click)="clickSwitch(appareil?.id || 1)" [nzLoading]="loadingStates[appareil?.id || 1]"></nz-switch>
+      </nz-card>
+    </div>
+  </div>
+  <!-- <div>Page: {{ page }}, Total Elements: {{ totalElement }}</div>
+  <div *ngFor="let appareil of getCurrentPageItems(); trackBy: trackByAppareilId">
+    {{ appareil | json }}
+  </div> -->
+  <nz-pagination
+  [(nzPageIndex)]="page"
+  [nzTotal]="totalElement"
+  [nzPageSize]="size"
+  (nzPageIndexChange)="pageChange($event - 1)">
+</nz-pagination>
+
+</div>
+
+<ng-template #loading>
+  <div class="loading-spinner">
+    <nz-spin nzSize="large"></nz-spin>
+  </div>
+</ng-template>
+
+<ng-template #coverTemplate>
+  <img alt="app" [src]="image" />
+</ng-template>
+
+<ng-template #actionOn>
+  <span nz-icon [nzType]="'check-circle'" [nzTheme]="'outline'" [ngStyle]="{'color': '#52c41a'}"></span>
+</ng-template>
+
+<ng-template #actionOff>
+  <span nz-icon [nzType]="'check-circle'" [nzTheme]="'outline'" [ngStyle]="{'color': '#f5222d'}"></span>
+</ng-template>
+
+<ng-template #actionEdit>
+  <span nz-icon nzType="edit"></span>
+</ng-template>
+
+<ng-template #actionEllipsis>
+  <span nz-icon nzType="ellipsis"></span>
+</ng-template>

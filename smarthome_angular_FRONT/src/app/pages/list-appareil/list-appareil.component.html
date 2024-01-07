@@ -1,0 +1,101 @@
+<button nz-button [nzType]="'primary'" (click)="showModal()"><span>Ajouter</span></button>
+<br />
+<br />
+<nz-table #basicTable [nzData]="listOfData" nzSize="small" nzShowSizeChanger
+  [nzFrontPagination]="false" [nzPageSize]="size"
+  (nzQueryParams)="onQueryParamsChange($event)" [nzTotal]="totalElement"
+  [nzLoading]="isLoading" nzSize="small" appAutoHeightTableDirective
+  [nzBordered]="true">
+  <thead>
+    <tr>
+        <th>Id</th>
+      <th>Label</th>
+      <th>Description</th>
+      <th>State</th>
+      <th>Categorie</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data" class="editable-row">
+        <td>{{ data.id }}</td>
+      <td> {{ data.label }} </td>
+      <td>{{ data.description }}</td>
+      <td>{{ data.state }}</td>
+      <td>{{ data.categorie?.label }}</td>
+      <td>
+        <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="fetch('deleteAppareil', data.id)">Delete</a>
+        &nbsp;
+        <a nz-popconfirm nzPopconfirmTitle="Sure to update?" (nzOnConfirm)="showUpdateModal(data)">Update</a>
+      </td>
+      
+    </tr>
+  </tbody>
+</nz-table>
+
+  <!-- Add Modal -->
+<nz-modal [(nzVisible)]="isAdd" nzTitle="Ajouter nv server" (nzOnCancel)="handleCancel()" (nzOnOk)="fetch('addAppareil')">
+    <ng-container *nzModalContent>
+      <form nz-form [formGroup]="addForm" (ngSubmit)="fetch('addAppareil')">
+        <nz-form-item>
+          <nz-form-label [nzFor]="'label'">Label</nz-form-label>
+          <nz-form-control [nzErrorTip]="'Label is required'">
+            <input nz-input formControlName="label" id="label" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzFor]="'description'">Description </nz-form-label>
+          <nz-form-control [nzErrorTip]="'Description is required'">
+            <input nz-input formControlName="description" id="description" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzFor]="'state'">Status</nz-form-label>
+ 
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a status" formControlName="state">
+            <nz-option [nzLabel]="'True'" [nzValue]="true"></nz-option>
+            <nz-option [nzLabel]="'False'" [nzValue]="false"></nz-option>
+          </nz-select>  
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzFor]="'categorie'">Categorie</nz-form-label>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a category" formControlName="categorie">
+              <nz-option *ngFor="let cat of listCat" [nzLabel]="cat.label ?? 'label'" [nzValue]="cat.id"></nz-option>
+            </nz-select>            
+        </nz-form-item>
+      </form>
+    </ng-container>
+  </nz-modal>
+  
+  <!-- Update Modal -->
+<nz-modal [(nzVisible)]="isUpdate" nzTitle="Update Appareil" (nzOnCancel)="handleCancel()" (nzOnOk)="fetch('editAppareil')">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="updateForm" (ngSubmit)="fetch('editAppareil')">
+      <nz-form-item>
+        <nz-form-label [nzFor]="'label'">Label</nz-form-label>
+        <nz-form-control [nzErrorTip]="'Label is required'">
+          <input nz-input formControlName="label" id="label" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzFor]="'description'">Description </nz-form-label>
+        <nz-form-control [nzErrorTip]="'Description is required'">
+          <input nz-input formControlName="description" id="description" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzFor]="'state'">Status</nz-form-label>
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a status" formControlName="state">
+          <nz-option [nzLabel]="'True'" [nzValue]="true"></nz-option>
+          <nz-option [nzLabel]="'False'" [nzValue]="false"></nz-option>
+        </nz-select>  
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzFor]="'categorie'">Categorie</nz-form-label>
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a category" formControlName="categorie">
+          <nz-option *ngFor="let cat of listCat" [nzLabel]="cat.label ?? 'label'" [nzValue]="cat.id"></nz-option>
+        </nz-select>            
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
